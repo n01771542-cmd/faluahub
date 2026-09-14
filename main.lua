@@ -730,7 +730,7 @@ RenderContent = function(categoryIndex)
 
             favBtn.MouseButton1Click:Connect(function()
                 scriptEntry.isFavorite = not scriptEntry.isFavorite
-                SaveFavorites() -- Simpan otomatis saat favorite diubah
+                SaveFavorites()
                 RenderContent(activeCategoryIndex)
             end)
 
@@ -871,7 +871,7 @@ RenderContent = function(categoryIndex)
 
         favBtn.MouseButton1Click:Connect(function()
             scriptEntry.isFavorite = not scriptEntry.isFavorite
-            SaveFavorites() -- Simpan otomatis saat favorite diubah
+            SaveFavorites()
             RenderContent(activeCategoryIndex)
         end)
 
@@ -1329,14 +1329,14 @@ bootConn = RunService.Heartbeat:Connect(function()
 
     for _, status in ipairs(BootStatuses) do
         if pct >= status[1] then
-            BootSubText.Text = status[2]
+            BootSubTest.Text = status[2]
         end
     end
 
     if pct >= 1 then
         bootConn:Disconnect()
         bootConn = nil
-        BootSubText.Text = "✓ Ready"
+        BootSubTest.Text = "✓ Ready"
 
         task.spawn(function()
             task.wait(0.4)
