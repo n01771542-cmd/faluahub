@@ -43,6 +43,9 @@ local Theme = {
 
 local WA_CHANNEL_LINK = "https://whatsapp.com/channel/0029VbDq74VHgZWbi0AdSa1L"
 
+-- [ MAIN GITHUB LOADER TERPISAH (TIDAK MASUK DATABASE SCRIPT) ]
+local MAIN_GITHUB_LOADER = "https://raw.githubusercontent.com/n01771542-cmd/faluahub/main/main.lua"
+
 -- [ 3. DATA KATEGORI & DAFTAR SCRIPT ]
 local ScriptDataStealAnEgg = {
     { name = "FYY HUB", status = "Key", recommended = true, url = "https://FyyCommunity.my.id" },
