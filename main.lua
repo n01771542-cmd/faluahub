@@ -79,16 +79,16 @@ local ScriptDataStealAnEgg = {
     { name = "GS HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/spiritualgaming1123-beep/46ef55c5f8284e076aafc5ebd12233f4/raw/5b24749c3931c1838a76e64c9af508dcdd03700a/gistfile1.lua" },
     { name = "PROBEST", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/0199b576f5c2d5a34159f0f9f4e1de0a566b4d1da5b1cfa5d2f71ade9bdcaa24/download" },
     { name = "SYSHUB FUN", status = "Key", recommended = false, url = "https://syshub.fun/free" },
-    { name = "FOXNAME", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua" },
+    { name = "FOXNAME", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua" },
     { name = "DUPE EGG + DUPE PET", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/INF-Hub-PL/StealAEggScript/refs/heads/main/Pet_SpawnerV1" },
     { name = "RONNEI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/elonmod/skibidi/refs/heads/main/Ronneihub-keyless.lua" },
     { name = "AXONIC HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Kenniel123/Steal-A-Egg/refs/heads/main/Steal%20A%20Egg" },
     { name = "NEOX HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/loader" },
-    { name = "LENNON V2", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/lennonxscripts/lennonhubv2/refs/heads/main/stealaneggv2" },
+    { name = "LENNON V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/lennonxscripts/lennonhubv2/refs/heads/main/stealaneggv2" },
     { name = "SAIOPS HUB", status = "Key", recommended = false, url = "https://api.saiops.cc/scripts/Steal-An-Egg-Script.lua" },
     { name = "ZEROIN HUB", status = "Key", recommended = false, url = "https://zeroinhub.com/api/script" },
     { name = "ONHUB VIET", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/ronnei/freemium/refs/heads/main/loader.lua" },
-    { name = "MIRANDA HUB V2", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaeggs" },
+    { name = "MIRANDA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaeggs" },
     { name = "PROJECT-MADARA", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/IsThisMe01/Project-Madara/refs/heads/main/stealanegg" },
     { name = "NEVERLOSE", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/inrate1337/NeverloseLoaderRoblox/refs/heads/main/main.luau" },
     { name = "SPIRITUAL GAMING HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/spiritualgaming1123-beep/f2c8c4009b2c4d4dda1b3d5fcb263ef3/raw/121ff8c9b59476a7a362b543edc61499e5832937/gistfile1.lua" },
@@ -97,7 +97,7 @@ local ScriptDataStealAnEgg = {
     { name = "SYSNEROX", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/DrakarDev/Hud/refs/heads/main/steal_an_egg.lua" },
     { name = "JINHUB", status = "Key", recommended = false, url = "https://jinhub.my.id/scripts/Universal.lua" },
     { name = "OVERFLOW", status = "Key", recommended = false, url = "https://overflow.cx/loader.lua" },
-    { name = "BLYXO HUB", status = "No Key", recommended = false, url = "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua" },
+    { name = "BLYXO HUB", status = "No Key", recommended = true, url = "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua" },
     { name = "SENA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/loaderv2sena" },
     { name = "TOOLBOX", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Abdullahking20/loader-lua/main/loader" },
     { name = "SOLVEXGUI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua" },
@@ -648,7 +648,17 @@ local function RenderContent(categoryIndex)
     local filteredScripts = {}
 
     for _, scriptEntry in ipairs(category.scripts) do
-        local matchesFilter = (activeFilter == "ALL") or (scriptEntry.status == activeFilter)
+        local matchesFilter = false
+        if activeFilter == "ALL" then
+            matchesFilter = true
+        elseif activeFilter == "Key" then
+            matchesFilter = (scriptEntry.status == "Key")
+        elseif activeFilter == "No Key" then
+            matchesFilter = (scriptEntry.status == "No Key")
+        elseif activeFilter == "Recommended" then
+            matchesFilter = (scriptEntry.recommended == true)
+        end
+
         local matchesSearch = (searchText == "") or (string.find(string.lower(scriptEntry.name), searchText, 1, true) ~= nil)
         
         if matchesFilter and matchesSearch then
@@ -658,7 +668,8 @@ local function RenderContent(categoryIndex)
 
     local filterTag = ""
     if activeFilter == "Key" then filterTag = " KEY"
-    elseif activeFilter == "No Key" then filterTag = " NO KEY" end
+    elseif activeFilter == "No Key" then filterTag = " NO KEY"
+    elseif activeFilter == "Recommended" then filterTag = " RECOMMENDED" end
     ContentLabel.Text = string.upper(category.name) .. " -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
 
     if #filteredScripts == 0 then
@@ -757,13 +768,14 @@ end
 local filterDefs = {
     { id = "ALL", text = "ALL" },
     { id = "Key", text = "🔑 KEY" },
-    { id = "No Key", text = "🔓 NO KEY" }
+    { id = "No Key", text = "🔓 NO KEY" },
+    { id = "Recommended", text = "🌟 RECOMEND" }
 }
 
 for _, fDef in ipairs(filterDefs) do
     local fBtn = Instance.new("TextButton")
     fBtn.Name = "Filter_" .. fDef.id
-    fBtn.Size = UDim2.fromOffset(68, 22)
+    fBtn.Size = UDim2.fromOffset(82, 22)
     fBtn.BackgroundColor3 = (activeFilter == fDef.id) and Theme.AccentBlue or Theme.CardBg
     fBtn.Text = fDef.text
     fBtn.Font = Enum.Font.GothamBold
