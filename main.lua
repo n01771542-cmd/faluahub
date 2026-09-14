@@ -87,7 +87,7 @@ local ScriptDataStealAnEgg = {
     { name = "LENNON V2", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/lennonxscripts/lennonhubv2/refs/heads/main/stealaneggv2" },
     { name = "SAIOPS HUB", status = "Key", recommended = false, url = "https://api.saiops.cc/scripts/Steal-An-Egg-Script.lua" },
     { name = "ZEROIN HUB", status = "Key", recommended = false, url = "https://zeroinhub.com/api/script" },
-    { name = "ONHUB VIET", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/ronnei/freemium/refs/heads/main/loader.lua" },
+    { name = "ONHUB VIET", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/ronnei/freemium/refs/heads/main/loader.lua" },
     { name = "MIRANDA HUB V2", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaeggs" },
     { name = "PROJECT-MADARA", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/IsThisMe01/Project-Madara/refs/heads/main/stealanegg" },
     { name = "NEVERLOSE", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/inrate1337/NeverloseLoaderRoblox/refs/heads/main/main.luau" },
