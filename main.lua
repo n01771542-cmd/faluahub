@@ -1,5 +1,5 @@
 -- ============================================================================
--- LEON4951 HUB v2 - SIDEBAR KATEGORI + FILTER SYSTEM + ELEGANT INFO ALL SCRIPT
+-- LEON4951 HUB v2 - UPDATE: CUSTOM FAVORITE TAB + AUTO CONFIG SAVE/LOAD
 -- ============================================================================
 
 -- [ PRE-INITIALIZATION CLEANUP ]
@@ -20,6 +20,7 @@ DestroyOldUI("leon4951HubGuiV2")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
 
 -- [ 2. CONFIGURASI & THEME ]
 local Theme = {
@@ -45,90 +46,90 @@ local WA_CHANNEL_LINK = "https://whatsapp.com/channel/0029VbDq74VHgZWbi0AdSa1L"
 
 -- [ 3. DATA KATEGORI & DAFTAR SCRIPT ]
 local ScriptDataStealAnEgg = {
-    { name = "FYY HUB", status = "Key", recommended = true, url = "https://FyyCommunity.my.id" },
-    { name = "SPEED HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua" },
-    { name = "BIGFROOT HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua" },
-    { name = "CHIYO HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/kaisenlmao/loader/refs/heads/main/chiyo.lua" },
-    { name = "CLOVER HUB", status = "Key", recommended = true, url = "https://cloverhub.app/clover.lua" },
-    { name = "ZERO POINT HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/JaxRol/ZeroPoint/refs/heads/main/KeySystem" },
-    { name = "UB HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/TeamUBHub/UBLoader/refs/heads/main/Loader.lua" },
-    { name = "VALINC HUB", status = "No Key", recommended = false, url = "https://api.valincsyndicate.com/v1/releases/5502cba03703f4a3628d522d396b80d8.lua" },
-    { name = "OUROBOROS HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua" },
-    { name = "OMG HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua" },
-    { name = "NASI RENDANG LUA", status = "Key", recommended = true, url = "https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua" },
-    { name = "UNKNOWN HUB", status = "Key", recommended = false, url = "https://unknownhub.win/api/projects/54474b4c5d5a4f459909c4cb70e7b4f3/loader" },
-    { name = "RIFT", status = "Key", recommended = false, url = "https://rifton.top/loader.lua" },
-    { name = "AIR FLOW", status = "Key", recommended = false, url = "https://airflowscript.com/loader" },
-    { name = "SOLIX HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/bao8jl/solixhub/main/loader" },
-    { name = "HOSHI HUB", status = "No Key", recommended = false, url = "https://hoshihub.site/loader.lua" },
-    { name = "ZERO IMPACT", status = "Key", recommended = false, url = "https://www.zeroimpact.online/raw/loader" },
-    { name = "SNOWY HUB", status = "Key", recommended = false, url = "https://flowauth.net/v1/ui/a87f00d9adf63658655fcd02ab86a4ef.lua" },
-    { name = "AJJANS HUB", status = "Key", recommended = true, url = "https://raw.githubusercontent.com/virtuososvisualedits-prog/Ww/refs/heads/main/final-obfuscated.lua" },
-    { name = "NEMESIS HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/x2zu/loader/main/freeloader.lua" },
-    { name = "NIGHT HUB", status = "No Key", recommended = false, url = "https://pastefy.app/J29hE5fR/raw" },
-    { name = "LUMIN HUB", status = "No Key", recommended = false, url = "http://luminon.top/loader.lua" },
-    { name = "CIAO HUB", status = "No Key", recommended = false, url = "https://pastefy.app/YoZocJ8O/raw" },
-    { name = "ZHENN HUB SPAWNER", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/ZhennHub/PetSpawner/refs/heads/main/lua" },
-    { name = "DECODEX", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/ItzYumi/Decode/refs/heads/main/DE%3ACODE.lua" },
-    { name = "CRZ HUB", status = "No Key", recommended = false, url = "https://flowauth.net/v1/loaders/3c4e87ed34813171b0f8d53a108a7d88.lua" },
-    { name = "KEXXE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/premiumbuddy/kex/refs/heads/main/kexxxx" },
-    { name = "NOVA HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/NovaHubRBLX/NovaHub/refs/heads/main/novahub.lua" },
-    { name = "VANTAGE", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/MisterNovitski/Vantage/refs/heads/main/mm2.txt" },
-    { name = "SPORTSCLUB HUB", status = "Key", recommended = false, url = "https://loader.sportsclub.fun/loader.luau" },
-    { name = "SCRIPTVERSE HUB", status = "Key", recommended = false, url = "https://scriptversekey.xyz/s/steal-an-egg" },
-    { name = "GS HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/spiritualgaming1123-beep/46ef55c5f8284e076aafc5ebd12233f4/raw/5b24749c3931c1838a76e64c9af508dcdd03700a/gistfile1.lua" },
-    { name = "PROBEST", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/0199b576f5c2d5a34159f0f9f4e1de0a566b4d1da5b1cfa5d2f71ade9bdcaa24/download" },
-    { name = "SYSHUB FUN", status = "Key", recommended = false, url = "https://syshub.fun/free" },
-    { name = "FOXNAME", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua" },
-    { name = "DUPE EGG + DUPE PET", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/INF-Hub-PL/StealAEggScript/refs/heads/main/Pet_SpawnerV1" },
-    { name = "RONNEI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/elonmod/skibidi/refs/heads/main/Ronneihub-keyless.lua" },
-    { name = "AXONIC HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Kenniel123/Steal-A-Egg/refs/heads/main/Steal%20A%20Egg" },
-    { name = "NEOX HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/loader" },
-    { name = "LENNON V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/lennonxscripts/lennonhubv2/refs/heads/main/stealaneggv2" },
-    { name = "SAIOPS HUB", status = "Key", recommended = false, url = "https://api.saiops.cc/scripts/Steal-An-Egg-Script.lua" },
-    { name = "ZEROIN HUB", status = "Key", recommended = false, url = "https://zeroinhub.com/api/script" },
-    { name = "ONHUB VIET", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/ronnei/freemium/refs/heads/main/loader.lua" },
-    { name = "MIRANDA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaeggs" },
-    { name = "PROJECT-MADARA", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/IsThisMe01/Project-Madara/refs/heads/main/stealanegg" },
-    { name = "NEVERLOSE", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/inrate1337/NeverloseLoaderRoblox/refs/heads/main/main.luau" },
-    { name = "SPIRITUAL GAMING HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/spiritualgaming1123-beep/f2c8c4009b2c4d4dda1b3d5fcb263ef3/raw/121ff8c9b59476a7a362b543edc61499e5832937/gistfile1.lua" },
-    { name = "CRYSTALIZED HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/a62237c6a75399adc9add4151ebeeb91c1f965fab665a650dcbc699a5622b37f/download" },
-    { name = "OCTOPUS HUB", status = "Key", recommended = false, url = "https://www.octopushub.xyz/loader" },
-    { name = "SYSNEROX", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/DrakarDev/Hud/refs/heads/main/steal_an_egg.lua" },
-    { name = "JINHUB", status = "Key", recommended = false, url = "https://jinhub.my.id/scripts/Universal.lua" },
-    { name = "OVERFLOW", status = "Key", recommended = false, url = "https://overflow.cx/loader.lua" },
-    { name = "BLYXO HUB", status = "No Key", recommended = true, url = "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua" },
-    { name = "SENA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/loaderv2sena" },
-    { name = "TOOLBOX", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Abdullahking20/loader-lua/main/loader" },
-    { name = "SOLVEXGUI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua" },
-    { name = "SPEED BYPASS", status = "No Key", recommended = false, url = "https://pastefy.app/iedWaiQX/raw" },
-    { name = "SAKURA HUB", status = "Key", recommended = false, url = "https://flowauth.net/v1/ui/d00ec69382de97372fc9559efc722298.lua" },
-    { name = "LUNARIS HUB", status = "Key", recommended = false, url = "https://jnkie.com/loaders/lunaris" },
-    { name = "FORGE HUB", status = "Key", recommended = false, url = "https://cdn.forgehub.store/loader" },
-    { name = "BASEMENT HUB", status = "Key", recommended = false, url = "https://thebsmt.xyz/BSMT" },
-    { name = "KALI HUB", status = "Key", recommended = false, url = "https://kalihub.xyz/loader.lua" },
-    { name = "CORE HUB", status = "Key", recommended = false, url = "https://getcore.lol/loader.lua" },
-    { name = "INDRA HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/2b7d97ed2525cef705b26f22d6964b87dd4b64a1bf533ac61d9edf6df14e8471/download" },
-    { name = "PET/EGG SPAWNER", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/d8f1c691a58edb11ef782849f80e9b61.lua" },
-    { name = "APEL HUB", status = "Key", recommended = false, url = "https://apelhub.com/loader.lua" },
-    { name = "PANDA HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Muhammad6196/Project-Infinity-X/refs/heads/main/main.lua" },
-    { name = "LUCID HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/IlyassSama/d4c20dcabe62c225b3e96a43cdb0eae9/raw/82020fd08fbff2ad69731e650d960f7d59a07fac/notifier.lua" },
-    { name = "FISHY", status = "Key", recommended = false, url = "https://jnkie.com/loaders/fishyhub" },
-    { name = "SCRIPTFARMER", status = "Key", recommended = false, url = "https://scriptfarmer.dpdns.org/loader/stealanegg-serverhoper" },
-    { name = "VIVID LUA", status = "Key", recommended = false, url = "https://vivid.vividhub.workers.dev/loader.lua" },
-    { name = "BERRI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/moshixzn/ahhagdienavd/refs/heads/main/loader.lua.txt" },
-    { name = "NOCTRUNHUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/insanecontenty2k-blip/scriptss/main/universalscriptsofop" },
-    { name = "CITRA HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/gilgameshfate59/ohbfoosk8tid/main/CitraLoader.lua" },
-    { name = "VINCI HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/tutorkah104-rgb/Sae/refs/heads/main/Sae.luau" },
-    { name = "HORIZON HUB ANTI HIT", status = "No Key", recommended = false, url = 'script_key = "Trial"; loadstring(game:HttpGet("https://api.getpolsec.com/scripts/hosted/6582551b42d21c6b7eb55f1d76d8d50ce53cb35592093d6615b5e83437594dc0.lua"))()' },
-    { name = "CHILLI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua" },
-    { name = "TSUO HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg" },
-    { name = "LKZ HUB", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua" },
-    { name = "REZZY HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Roman666Cabj/Nether/refs/heads/main/RezzyStealAnEgg.lua" },
-    { name = "RAVANGE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Revenge-Hub-Roblox/Scripts/refs/heads/main/Loader.lua" }
+    { name = "FYY HUB", status = "Key", recommended = true, url = "https://FyyCommunity.my.id", isFavorite = false },
+    { name = "SPEED HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", isFavorite = false },
+    { name = "BIGFROOT HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua", isFavorite = false },
+    { name = "CHIYO HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/kaisenlmao/loader/refs/heads/main/chiyo.lua", isFavorite = false },
+    { name = "CLOVER HUB", status = "Key", recommended = true, url = "https://cloverhub.app/clover.lua", isFavorite = false },
+    { name = "ZERO POINT HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/JaxRol/ZeroPoint/refs/heads/main/KeySystem", isFavorite = false },
+    { name = "UB HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/TeamUBHub/UBLoader/refs/heads/main/Loader.lua", isFavorite = false },
+    { name = "VALINC HUB", status = "No Key", recommended = false, url = "https://api.valincsyndicate.com/v1/releases/5502cba03703f4a3628d522d396b80d8.lua", isFavorite = false },
+    { name = "OUROBOROS HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/joustingmatch/Ouroboros/main/loader.lua", isFavorite = false },
+    { name = "OMG HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua", isFavorite = false },
+    { name = "NASI RENDANG LUA", status = "Key", recommended = true, url = "https://raw.githubusercontent.com/JualNasiRendang/loader/refs/heads/main/main.lua", isFavorite = false },
+    { name = "UNKNOWN HUB", status = "Key", recommended = false, url = "https://unknownhub.win/api/projects/54474b4c5d5a4f459909c4cb70e7b4f3/loader", isFavorite = false },
+    { name = "RIFT", status = "Key", recommended = false, url = "https://rifton.top/loader.lua", isFavorite = false },
+    { name = "AIR FLOW", status = "Key", recommended = false, url = "https://airflowscript.com/loader", isFavorite = false },
+    { name = "SOLIX HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/bao8jl/solixhub/main/loader", isFavorite = false },
+    { name = "HOSHI HUB", status = "No Key", recommended = false, url = "https://hoshihub.site/loader.lua", isFavorite = false },
+    { name = "ZERO IMPACT", status = "Key", recommended = false, url = "https://www.zeroimpact.online/raw/loader", isFavorite = false },
+    { name = "SNOWY HUB", status = "Key", recommended = false, url = "https://flowauth.net/v1/ui/a87f00d9adf63658655fcd02ab86a4ef.lua", isFavorite = false },
+    { name = "AJJANS HUB", status = "Key", recommended = true, url = "https://raw.githubusercontent.com/virtuososvisualedits-prog/Ww/refs/heads/main/final-obfuscated.lua", isFavorite = false },
+    { name = "NEMESIS HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/x2zu/loader/main/freeloader.lua", isFavorite = false },
+    { name = "NIGHT HUB", status = "No Key", recommended = false, url = "https://pastefy.app/J29hE5fR/raw", isFavorite = false },
+    { name = "LUMIN HUB", status = "No Key", recommended = false, url = "http://luminon.top/loader.lua", isFavorite = false },
+    { name = "CIAO HUB", status = "No Key", recommended = false, url = "https://pastefy.app/YoZocJ8O/raw", isFavorite = false },
+    { name = "ZHENN HUB SPAWNER", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/ZhennHub/PetSpawner/refs/heads/main/lua", isFavorite = false },
+    { name = "DECODEX", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/ItzYumi/Decode/refs/heads/main/DE%3ACODE.lua", isFavorite = false },
+    { name = "CRZ HUB", status = "No Key", recommended = false, url = "https://flowauth.net/v1/loaders/3c4e87ed34813171b0f8d53a108a7d88.lua", isFavorite = false },
+    { name = "KEXXE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/premiumbuddy/kex/refs/heads/main/kexxxx", isFavorite = false },
+    { name = "NOVA HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/NovaHubRBLX/NovaHub/refs/heads/main/novahub.lua", isFavorite = false },
+    { name = "VANTAGE", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/MisterNovitski/Vantage/refs/heads/main/mm2.txt", isFavorite = false },
+    { name = "SPORTSCLUB HUB", status = "Key", recommended = false, url = "https://loader.sportsclub.fun/loader.luau", isFavorite = false },
+    { name = "SCRIPTVERSE HUB", status = "Key", recommended = false, url = "https://scriptversekey.xyz/s/steal-an-egg", isFavorite = false },
+    { name = "GS HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/spiritualgaming1123-beep/46ef55c5f8284e076aafc5ebd12233f4/raw/5b24749c3931c1838a76e64c9af508dcdd03700a/gistfile1.lua", isFavorite = false },
+    { name = "PROBEST", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/0199b576f5c2d5a34159f0f9f4e1de0a566b4d1da5b1cfa5d2f71ade9bdcaa24/download", isFavorite = false },
+    { name = "SYSHUB FUN", status = "Key", recommended = false, url = "https://syshub.fun/free", isFavorite = false },
+    { name = "FOXNAME", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/Fn-stealanegg.lua", isFavorite = false },
+    { name = "DUPE EGG + DUPE PET", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/INF-Hub-PL/StealAEggScript/refs/heads/main/Pet_SpawnerV1", isFavorite = false },
+    { name = "RONNEI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/elonmod/skibidi/refs/heads/main/Ronneihub-keyless.lua", isFavorite = false },
+    { name = "AXONIC HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Kenniel123/Steal-A-Egg/refs/heads/main/Steal%20A%20Egg", isFavorite = false },
+    { name = "NEOX HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/loader", isFavorite = false },
+    { name = "LENNON V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/lennonxscripts/lennonhubv2/refs/heads/main/stealaneggv2", isFavorite = false },
+    { name = "SAIOPS HUB", status = "Key", recommended = false, url = "https://api.saiops.cc/scripts/Steal-An-Egg-Script.lua", isFavorite = false },
+    { name = "ZEROIN HUB", status = "Key", recommended = false, url = "https://zeroinhub.com/api/script", isFavorite = false },
+    { name = "ONHUB VIET", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/ronnei/freemium/refs/heads/main/loader.lua", isFavorite = false },
+    { name = "MIRANDA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/stealaeggs", isFavorite = false },
+    { name = "PROJECT-MADARA", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/IsThisMe01/Project-Madara/refs/heads/main/stealanegg", isFavorite = false },
+    { name = "NEVERLOSE", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/inrate1337/NeverloseLoaderRoblox/refs/heads/main/main.luau", isFavorite = false },
+    { name = "SPIRITUAL GAMING HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/spiritualgaming1123-beep/f2c8c4009b2c4d4dda1b3d5fcb263ef3/raw/121ff8c9b59476a7a362b543edc61499e5832937/gistfile1.lua", isFavorite = false },
+    { name = "CRYSTALIZED HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/a62237c6a75399adc9add4151ebeeb91c1f965fab665a650dcbc699a5622b37f/download", isFavorite = false },
+    { name = "OCTOPUS HUB", status = "Key", recommended = false, url = "https://www.octopushub.xyz/loader", isFavorite = false },
+    { name = "SYSNEROX", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/DrakarDev/Hud/refs/heads/main/steal_an_egg.lua", isFavorite = false },
+    { name = "JINHUB", status = "Key", recommended = false, url = "https://jinhub.my.id/scripts/Universal.lua", isFavorite = false },
+    { name = "OVERFLOW", status = "Key", recommended = false, url = "https://overflow.cx/loader.lua", isFavorite = false },
+    { name = "BLYXO HUB", status = "No Key", recommended = true, url = "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua", isFavorite = false },
+    { name = "SENA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/loaderv2sena", isFavorite = false },
+    { name = "TOOLBOX", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Abdullahking20/loader-lua/main/loader", isFavorite = false },
+    { name = "SOLVEXGUI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua", isFavorite = false },
+    { name = "SPEED BYPASS", status = "No Key", recommended = false, url = "https://pastefy.app/iedWaiQX/raw", isFavorite = false },
+    { name = "SAKURA HUB", status = "Key", recommended = false, url = "https://flowauth.net/v1/ui/d00ec69382de97372fc9559efc722298.lua", isFavorite = false },
+    { name = "LUNARIS HUB", status = "Key", recommended = false, url = "https://jnkie.com/loaders/lunaris", isFavorite = false },
+    { name = "FORGE HUB", status = "Key", recommended = false, url = "https://cdn.forgehub.store/loader", isFavorite = false },
+    { name = "BASEMENT HUB", status = "Key", recommended = false, url = "https://thebsmt.xyz/BSMT", isFavorite = false },
+    { name = "KALI HUB", status = "Key", recommended = false, url = "https://kalihub.xyz/loader.lua", isFavorite = false },
+    { name = "CORE HUB", status = "Key", recommended = false, url = "https://getcore.lol/loader.lua", isFavorite = false },
+    { name = "INDRA HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/2b7d97ed2525cef705b26f22d6964b87dd4b64a1bf533ac61d9edf6df14e8471/download", isFavorite = false },
+    { name = "PET/EGG SPAWNER", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/d8f1c691a58edb11ef782849f80e9b61.lua", isFavorite = false },
+    { name = "APEL HUB", status = "Key", recommended = false, url = "https://apelhub.com/loader.lua", isFavorite = false },
+    { name = "PANDA HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Muhammad6196/Project-Infinity-X/refs/heads/main/main.lua", isFavorite = false },
+    { name = "LUCID HUB", status = "Key", recommended = false, url = "https://gist.githubusercontent.com/IlyassSama/d4c20dcabe62c225b3e96a43cdb0eae9/raw/82020fd08fbff2ad69731e650d960f7d59a07fac/notifier.lua", isFavorite = false },
+    { name = "FISHY", status = "Key", recommended = false, url = "https://jnkie.com/loaders/fishyhub", isFavorite = false },
+    { name = "SCRIPTFARMER", status = "Key", recommended = false, url = "https://scriptfarmer.dpdns.org/loader/stealanegg-serverhoper", isFavorite = false },
+    { name = "VIVID LUA", status = "Key", recommended = false, url = "https://vivid.vividhub.workers.dev/loader.lua", isFavorite = false },
+    { name = "BERRI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/moshixzn/ahhagdienavd/refs/heads/main/loader.lua.txt", isFavorite = false },
+    { name = "NOCTRUNHUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/insanecontenty2k-blip/scriptss/main/universalscriptsofop", isFavorite = false },
+    { name = "CITRA HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/gilgameshfate59/ohbfoosk8tid/main/CitraLoader.lua", isFavorite = false },
+    { name = "VINCI HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/tutorkah104-rgb/Sae/refs/heads/main/Sae.luau", isFavorite = false },
+    { name = "HORIZON HUB ANTI HIT", status = "No Key", recommended = false, url = 'script_key = "Trial"; loadstring(game:HttpGet("https://api.getpolsec.com/scripts/hosted/6582551b42d21c6b7eb55f1d76d8d50ce53cb35592093d6615b5e83437594dc0.lua"))()', isFavorite = false },
+    { name = "CHILLI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", isFavorite = false },
+    { name = "TSUO HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg", isFavorite = false },
+    { name = "LKZ HUB", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua", isFavorite = false },
+    { name = "REZZY HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Roman666Cabj/Nether/refs/heads/main/RezzyStealAnEgg.lua", isFavorite = false },
+    { name = "RAVANGE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Revenge-Hub-Roblox/Scripts/refs/heads/main/Loader.lua", isFavorite = false }
 }
 
--- Deduplikasi jika name + status + url persis sama
+-- Deduplikasi script
 local CleanedScripts = {}
 local DuplicateTracker = {}
 for _, s in ipairs(ScriptDataStealAnEgg) do
@@ -139,11 +140,55 @@ for _, s in ipairs(ScriptDataStealAnEgg) do
     end
 end
 
+-- [ SISTEM CONFIG: SAVE & LOAD FAVORITE ]
+local CONFIG_FILE_NAME = "leon4951_hub_favorites.json"
+
+local function SaveFavorites()
+    if not writefile then return end
+    local favData = {}
+    for _, s in ipairs(CleanedScripts) do
+        if s.isFavorite then
+            table.insert(favData, s.name)
+        end
+    end
+    pcall(function()
+        writefile(CONFIG_FILE_NAME, HttpService:JSONEncode(favData))
+    end)
+end
+
+local function LoadFavorites()
+    if not readfile or not isfile or not isfile(CONFIG_FILE_NAME) then return end
+    pcall(function()
+        local content = readfile(CONFIG_FILE_NAME)
+        local decoded = HttpService:JSONDecode(content)
+        if type(decoded) == "table" then
+            local favMap = {}
+            for _, name in ipairs(decoded) do
+                favMap[name] = true
+            end
+            for _, s in ipairs(CleanedScripts) do
+                if favMap[s.name] then
+                    s.isFavorite = true
+                end
+            end
+        end
+    end)
+end
+
+-- Muat data favorite saat script pertama kali dijalankan
+LoadFavorites()
+
 local Categories = {
     {
         key = "StealAnEgg",
         name = "steal an egg",
         type = "script_list",
+        scripts = CleanedScripts,
+    },
+    {
+        key = "Favorite",
+        name = "★ favorite", 
+        type = "favorite",
         scripts = CleanedScripts,
     },
     {
@@ -442,8 +487,10 @@ ScriptScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 ScriptScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 ScriptScroll.Parent = Content
 
+local RenderContent
+
 -- [ 8. RENDER KONTEN ]
-local function RenderContent(categoryIndex)
+RenderContent = function(categoryIndex)
     local category = Categories[categoryIndex]
     
     for _, child in ipairs(ScriptScroll:GetChildren()) do
@@ -455,6 +502,7 @@ local function RenderContent(categoryIndex)
     local oldLayout = ScriptScroll:FindFirstChildOfClass("UIListLayout") or ScriptScroll:FindFirstChildOfClass("UIGridLayout")
     if oldLayout then oldLayout:Destroy() end
 
+    -- Handle Tab: Info/All Script
     if category.type == "info" then
         FilterContainer.Visible = false
         SearchBox.Visible = false
@@ -548,6 +596,7 @@ local function RenderContent(categoryIndex)
         ScriptScroll.CanvasPosition = Vector2.new(0, 0)
         return
 
+    -- Handle Tab: New Script
     elseif category.type == "new_script" then
         FilterContainer.Visible = false
         SearchBox.Visible = false
@@ -579,65 +628,178 @@ local function RenderContent(categoryIndex)
             emptyLbl.TextXAlignment = Enum.TextXAlignment.Center
             emptyLbl.Text = "Belum Ada Script Baru"
             emptyLbl.Parent = emptyCard
-        else
-            for i, scriptEntry in ipairs(category.scripts) do
-                local row = Instance.new("Frame")
-                row.Name = "Row_" .. i
-                row.Size = UDim2.new(1, 0, 0, 38)
-                row.BackgroundColor3 = Theme.CardBg
-                row.LayoutOrder = i
-                row.Parent = ScriptScroll
-                Instance.new("UICorner", row).CornerRadius = UDim.new(0, 7)
-
-                local nameLabel = Instance.new("TextLabel")
-                nameLabel.Font = Enum.Font.GothamBold
-                nameLabel.TextSize = 12
-                nameLabel.TextColor3 = Theme.TextPrimary
-                nameLabel.BackgroundTransparency = 1
-                nameLabel.Size = UDim2.new(1, -140, 1, 0)
-                nameLabel.Position = UDim2.new(0, 10, 0, 0)
-                nameLabel.TextXAlignment = Enum.TextXAlignment.Left
-                nameLabel.TextTruncate = Enum.TextTruncate.AtEnd
-                nameLabel.Text = scriptEntry.name
-                nameLabel.Parent = row
-
-                local runBtn = Instance.new("TextButton")
-                runBtn.Size = UDim2.fromOffset(52, 24)
-                runBtn.Position = UDim2.new(1, -58, 0.5, -12)
-                runBtn.BackgroundColor3 = Theme.RunPillBg
-                runBtn.Text = "run"
-                runBtn.Font = Enum.Font.GothamBold
-                runBtn.TextSize = 11
-                runBtn.TextColor3 = Color3.fromRGB(111, 168, 255)
-                runBtn.AutoButtonColor = false
-                runBtn.Parent = row
-                Instance.new("UICorner", runBtn).CornerRadius = UDim.new(1, 0)
-
-                runBtn.MouseButton1Click:Connect(function()
-                    if scriptEntry.url and scriptEntry.url ~= "" then
-                        pcall(function() loadstring(game:HttpGet(scriptEntry.url))() end)
-                    end
-                end)
-
-                local statusBadge = Instance.new("TextLabel")
-                statusBadge.Size = UDim2.fromOffset(58, 20)
-                statusBadge.Position = UDim2.new(1, -122, 0.5, -10)
-                statusBadge.BackgroundColor3 = (scriptEntry.status == "Key") and Theme.KeyTagBg or Theme.NoKeyTagBg
-                statusBadge.Text = scriptEntry.status
-                statusBadge.Font = Enum.Font.GothamBold
-                statusBadge.TextSize = 11
-                statusBadge.TextColor3 = Theme.TextPrimary
-                statusBadge.Parent = row
-                Instance.new("UICorner", statusBadge).CornerRadius = UDim.new(0, 4)
-            end
         end
 
         ScriptScroll.CanvasPosition = Vector2.new(0, 0)
         return
     end
 
+    -- Handle Tab: Favorite
+    if category.type == "favorite" then
+        FilterContainer.Visible = true
+        SearchBox.Visible = true
+
+        for id, fBtn in pairs(filterButtons) do
+            if id == "Recommended" then
+                fBtn.Visible = false
+            else
+                fBtn.Visible = true
+            end
+        end
+
+        local searchText = string.lower(SearchBox.Text)
+        local sourceList = {}
+        for _, s in ipairs(CleanedScripts) do
+            if s.isFavorite then
+                table.insert(sourceList, s)
+            end
+        end
+
+        local filteredScripts = {}
+        for _, scriptEntry in ipairs(sourceList) do
+            local matchesFilter = false
+            if activeFilter == "ALL" then
+                matchesFilter = true
+            elseif activeFilter == "Key" then
+                matchesFilter = (scriptEntry.status == "Key")
+            elseif activeFilter == "No Key" then
+                matchesFilter = (scriptEntry.status == "No Key")
+            end
+
+            local matchesSearch = (searchText == "") or (string.find(string.lower(scriptEntry.name), searchText, 1, true) ~= nil)
+            
+            if matchesFilter and matchesSearch then
+                table.insert(filteredScripts, scriptEntry)
+            end
+        end
+
+        local filterTag = ""
+        if activeFilter == "Key" then filterTag = " KEY"
+        elseif activeFilter == "No Key" then filterTag = " NO KEY" end
+        
+        ContentLabel.Text = "FAVORITE SCRIPTS -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
+
+        if #filteredScripts == 0 then
+            local empty = Instance.new("TextLabel")
+            empty.Font = Enum.Font.Gotham
+            empty.TextSize = 11
+            empty.TextColor3 = Theme.TextMuted
+            empty.BackgroundTransparency = 1
+            empty.Size = UDim2.new(1, 0, 0, 40)
+            empty.Text = "Belum ada script yang ditambahkan ke favorite!"
+            empty.Parent = ScriptScroll
+            return
+        end
+
+        local GridContainer = Instance.new("Frame")
+        GridContainer.Name = "FavoriteGridContainer"
+        GridContainer.Size = UDim2.new(1, 0, 0, 0)
+        GridContainer.AutomaticSize = Enum.AutomaticSize.Y
+        GridContainer.BackgroundTransparency = 1
+        GridContainer.Parent = ScriptScroll
+
+        local GridLayout = Instance.new("UIGridLayout")
+        GridLayout.CellSize = UDim2.new(0, 236, 0, 60)
+        GridLayout.CellPadding = UDim2.new(0, 10, 0, 10)
+        GridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        GridLayout.Parent = GridContainer
+
+        for i, scriptEntry in ipairs(filteredScripts) do
+            local card = Instance.new("Frame")
+            card.Name = "FavCard_" .. i
+            card.BackgroundColor3 = Theme.CardBg
+            card.LayoutOrder = i
+            card.Parent = GridContainer
+            Instance.new("UICorner", card).CornerRadius = UDim.new(0, 8)
+
+            local cardStroke = Instance.new("UIStroke")
+            cardStroke.Color = Theme.BorderColor
+            cardStroke.Thickness = 1
+            cardStroke.Parent = card
+
+            local favBtn = Instance.new("TextButton")
+            favBtn.Size = UDim2.fromOffset(32, 32)
+            favBtn.Position = UDim2.new(0, 8, 0.5, -16)
+            favBtn.BackgroundTransparency = 1
+            favBtn.Text = "★"
+            favBtn.Font = Enum.Font.GothamBold
+            favBtn.TextSize = 22
+            favBtn.TextColor3 = Theme.GoldBadge
+            favBtn.AutoButtonColor = false
+            favBtn.Parent = card
+
+            favBtn.MouseButton1Click:Connect(function()
+                scriptEntry.isFavorite = not scriptEntry.isFavorite
+                SaveFavorites() -- Simpan otomatis saat favorite diubah
+                RenderContent(activeCategoryIndex)
+            end)
+
+            local nameLabel = Instance.new("TextLabel")
+            nameLabel.Font = Enum.Font.GothamBold
+            nameLabel.TextSize = 12
+            nameLabel.TextColor3 = Theme.TextPrimary
+            nameLabel.BackgroundTransparency = 1
+            nameLabel.Size = UDim2.new(1, -125, 0, 20)
+            nameLabel.Position = UDim2.new(0, 42, 0, 8)
+            nameLabel.TextXAlignment = Enum.TextXAlignment.Left
+            nameLabel.TextTruncate = Enum.TextTruncate.AtEnd
+            nameLabel.Text = scriptEntry.name
+            nameLabel.Parent = card
+
+            local statusBadge = Instance.new("TextLabel")
+            statusBadge.Size = UDim2.fromOffset(64, 20)
+            statusBadge.Position = UDim2.new(0, 42, 0, 32)
+            statusBadge.BackgroundColor3 = (scriptEntry.status == "Key") and Theme.KeyTagBg or Theme.NoKeyTagBg
+            statusBadge.Text = scriptEntry.status
+            statusBadge.Font = Enum.Font.GothamBold
+            statusBadge.TextSize = 10
+            statusBadge.TextColor3 = Theme.TextPrimary
+            statusBadge.Parent = card
+            Instance.new("UICorner", statusBadge).CornerRadius = UDim.new(0, 4)
+
+            local runBtn = Instance.new("TextButton")
+            runBtn.Size = UDim2.fromOffset(75, 34)
+            runBtn.Position = UDim2.new(1, -83, 0.5, -17)
+            runBtn.BackgroundColor3 = Theme.RunPillBg
+            runBtn.Text = "RUN"
+            runBtn.Font = Enum.Font.GothamBold
+            runBtn.TextSize = 13
+            runBtn.TextColor3 = Color3.fromRGB(111, 168, 255)
+            runBtn.AutoButtonColor = false
+            runBtn.Parent = card
+            Instance.new("UICorner", runBtn).CornerRadius = UDim.new(0, 6)
+
+            runBtn.MouseEnter:Connect(function()
+                TweenService:Create(runBtn, TweenInfo.new(0.12), { BackgroundColor3 = Theme.AccentBlue }):Play()
+            end)
+            runBtn.MouseLeave:Connect(function()
+                TweenService:Create(runBtn, TweenInfo.new(0.12), { BackgroundColor3 = Theme.RunPillBg }):Play()
+            end)
+
+            runBtn.MouseButton1Click:Connect(function()
+                if scriptEntry.url and scriptEntry.url ~= "" then
+                    pcall(function()
+                        if string.sub(scriptEntry.url, 1, 10) == "loadstring" or string.find(scriptEntry.url, "script_key") then
+                            loadstring(scriptEntry.url)()
+                        else
+                            loadstring(game:HttpGet(scriptEntry.url))()
+                        end
+                    end)
+                end
+            end)
+        end
+
+        ScriptScroll.CanvasPosition = Vector2.new(0, 0)
+        return
+    end
+
+    -- Handle Tab: Steal An Egg (Normal List)
     FilterContainer.Visible = true
     SearchBox.Visible = true
+
+    for _, fBtn in pairs(filterButtons) do
+        fBtn.Visible = true
+    end
 
     local ListLayout = Instance.new("UIListLayout")
     ListLayout.Padding = UDim.new(0, 6)
@@ -645,9 +807,11 @@ local function RenderContent(categoryIndex)
     ListLayout.Parent = ScriptScroll
 
     local searchText = string.lower(SearchBox.Text)
+    local sourceList = category.scripts
+
     local filteredScripts = {}
 
-    for _, scriptEntry in ipairs(category.scripts) do
+    for _, scriptEntry in ipairs(sourceList) do
         local matchesFilter = false
         if activeFilter == "ALL" then
             matchesFilter = true
@@ -670,6 +834,7 @@ local function RenderContent(categoryIndex)
     if activeFilter == "Key" then filterTag = " KEY"
     elseif activeFilter == "No Key" then filterTag = " NO KEY"
     elseif activeFilter == "Recommended" then filterTag = " RECOMMENDED" end
+    
     ContentLabel.Text = string.upper(category.name) .. " -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
 
     if #filteredScripts == 0 then
@@ -693,13 +858,30 @@ local function RenderContent(categoryIndex)
         row.Parent = ScriptScroll
         Instance.new("UICorner", row).CornerRadius = UDim.new(0, 7)
 
+        local favBtn = Instance.new("TextButton")
+        favBtn.Size = UDim2.fromOffset(28, 28)
+        favBtn.Position = UDim2.new(0, 6, 0.5, -14)
+        favBtn.BackgroundTransparency = 1
+        favBtn.Text = scriptEntry.isFavorite and "★" or "☆"
+        favBtn.Font = Enum.Font.GothamBold
+        favBtn.TextSize = 20
+        favBtn.TextColor3 = scriptEntry.isFavorite and Theme.GoldBadge or Theme.TextMuted
+        favBtn.AutoButtonColor = false
+        favBtn.Parent = row
+
+        favBtn.MouseButton1Click:Connect(function()
+            scriptEntry.isFavorite = not scriptEntry.isFavorite
+            SaveFavorites() -- Simpan otomatis saat favorite diubah
+            RenderContent(activeCategoryIndex)
+        end)
+
         local nameLabel = Instance.new("TextLabel")
         nameLabel.Font = Enum.Font.GothamBold
         nameLabel.TextSize = 12
         nameLabel.TextColor3 = Theme.TextPrimary
         nameLabel.BackgroundTransparency = 1
-        nameLabel.Size = UDim2.new(1, -230, 1, 0)
-        nameLabel.Position = UDim2.new(0, 10, 0, 0)
+        nameLabel.Size = UDim2.new(1, -250, 1, 0)
+        nameLabel.Position = UDim2.new(0, 38, 0, 0)
         nameLabel.TextXAlignment = Enum.TextXAlignment.Left
         nameLabel.TextTruncate = Enum.TextTruncate.AtEnd
         nameLabel.Text = scriptEntry.name
@@ -779,7 +961,7 @@ for _, fDef in ipairs(filterDefs) do
     fBtn.BackgroundColor3 = (activeFilter == fDef.id) and Theme.AccentBlue or Theme.CardBg
     fBtn.Text = fDef.text
     fBtn.Font = Enum.Font.GothamBold
-    fBtn.TextSize = 9
+    fBtn.TextSize = 11
     fBtn.TextColor3 = (activeFilter == fDef.id) and Theme.TextPrimary or Theme.TextSecondary
     fBtn.AutoButtonColor = false
     fBtn.Parent = FilterContainer
@@ -842,7 +1024,7 @@ for i, category in ipairs(Categories) do
 
     local label = Instance.new("TextLabel")
     label.Font = Enum.Font.GothamBold
-    label.TextSize = 12
+    label.TextSize = (category.key == "Favorite") and 15 or 12
     label.TextColor3 = (i == activeCategoryIndex) and Theme.TextPrimary or Theme.TextSecondary
     label.BackgroundTransparency = 1
     label.Size = UDim2.new(1, -30, 1, 0)
@@ -895,7 +1077,7 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- [ 11.5 RESIZE SYSTEM (DI POJOK KANAN BAWAH UI UTAMA) ]
+-- [ 11.5 RESIZE SYSTEM ]
 local ResizeHandle = Instance.new("TextButton")
 ResizeHandle.Name = "ResizeHandle"
 ResizeHandle.Size = UDim2.fromOffset(20, 20)
@@ -938,7 +1120,7 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- [ 12. FLOATING TOGGLE BUTTON (F) - DI SEBELAH KIRI TENGAH KEATAS DIKIT ]
+-- [ 12. FLOATING TOGGLE BUTTON ]
 local FloatingBtn = Instance.new("TextButton")
 FloatingBtn.Name = "FloatingToggleBtn"
 FloatingBtn.Size = UDim2.fromOffset(44, 44)
