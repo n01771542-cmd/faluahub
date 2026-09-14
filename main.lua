@@ -45,7 +45,6 @@ local WA_CHANNEL_LINK = "https://whatsapp.com/channel/0029VbDq74VHgZWbi0AdSa1L"
 
 -- [ 3. DATA KATEGORI & DAFTAR SCRIPT ]
 local ScriptDataStealAnEgg = {
-    { name = "FALUA HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/n01771542-cmd/faluahub/main/main.lua" },
     { name = "FYY HUB", status = "Key", recommended = true, url = "https://FyyCommunity.my.id" },
     { name = "SPEED HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua" },
     { name = "BIGFROOT HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua" },
