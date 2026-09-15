@@ -48,6 +48,7 @@ local MAIN_GITHUB_LOADER = "https://raw.githubusercontent.com/n01771542-cmd/falu
 
 -- [ 3. DATA KATEGORI & DAFTAR SCRIPT ]
 local ScriptDataStealAnEgg = {
+    { name = "YANTO HUB KEY : YANTOHUB", status = "Key", recommended = true, url = "https://raw.githubusercontent.com/YantoRoblox/Script-Free-YantoHUB/refs/heads/main/YantoHUB" },
     { name = "FYY HUB", status = "Key", recommended = true, url = "https://FyyCommunity.my.id" },
     { name = "SPEED HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua" },
     { name = "BIGFROOT HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/hanniii1/Loader/refs/heads/main/BFLoader.lua" },
@@ -122,11 +123,11 @@ local ScriptDataStealAnEgg = {
     { name = "BERRI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/moshixzn/ahhagdienavd/refs/heads/main/loader.lua.txt" },
     { name = "NOCTRUNHUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/insanecontenty2k-blip/scriptss/main/universalscriptsofop" },
     { name = "CITRA HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/gilgameshfate59/ohbfoosk8tid/main/CitraLoader.lua" },
-    { name = "VINCI HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/tutorkah104-rgb/Sae/refs/heads/main/Sae.luau" },
+    { name = "VINCI HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/tutorkah104-rgb/Steal-an-Egg/refs/heads/main/Vincitore.luau" },
     { name = "HORIZON HUB ANTI HIT", status = "No Key", recommended = false, url = 'script_key = "Trial"; loadstring(game:HttpGet("https://api.getpolsec.com/scripts/hosted/6582551b42d21c6b7eb55f1d76d8d50ce53cb35592093d6615b5e83437594dc0.lua"))()' },
     { name = "CHILLI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua" },
     { name = "TSUO HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg" },
-    { name = "LKZ HUB", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/65bf3459d87ba3ac46350e154b640929.lua" },
+    { name = "LKZ HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/LucasggkX/LKZ-Hub/refs/heads/main/Loader.lua" },
     { name = "REZZY HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Roman666Cabj/Nether/refs/heads/main/RezzyStealAnEgg.lua" },
     { name = "RAVANGE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Revenge-Hub-Roblox/Scripts/refs/heads/main/Loader.lua" }
 }
