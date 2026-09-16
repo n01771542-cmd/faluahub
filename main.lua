@@ -129,11 +129,8 @@ local ScriptDataStealAnEgg = {
     { name = "TSUO HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg" },
     { name = "LKZ HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/LucasggkX/LKZ-Hub/refs/heads/main/Loader.lua" },
     { name = "REZZY HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Roman666Cabj/Nether/refs/heads/main/RezzyStealAnEgg.lua" },
-    { name = "RAVANGE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Revenge-Hub-Roblox/Scripts/refs/heads/main/Loader.lua" }
-}
-
--- [ DATA NEW SCRIPTS ]
-local NewScriptsData = {
+    { name = "RAVANGE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Revenge-Hub-Roblox/Scripts/refs/heads/main/Loader.lua" },
+    -- 7 Script lama yang tetap dipertahankan di tab "Steal an Egg"
     { name = "ZNEX HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/181cfe2bd5df35ce78607b5ffb37c6666abd76eda11ff33b0f24a1b2d8ee935f/download" },
     { name = "ASVARA HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/asvraRoblox/stealegg/refs/heads/main/main" },
     { name = "VSN", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/NetNullv1/VSN/refs/heads/main/HUB" },
@@ -141,6 +138,16 @@ local NewScriptsData = {
     { name = "VELOX HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/f0b3ce85f588800ae7e46415fc4dd79ff2b0d09c9b6a8e19cea8a67b47f1bcbd/download" },
     { name = "KING VYPER (KEY: KV-FREE-TRIAL-WOKS)", status = "Key", recommended = false, url = "https://kingvypers.site/raw/TrialLoader" },
     { name = "HIP-HUP", status = "Key", recommended = false, url = "https://hiphub.cloud/api/script-roblox/loader" }
+}
+
+-- [ DATA NEW SCRIPTS (6 NEW SCRIPTS) ]
+local NewScriptsData = {
+    { name = "BK HUB", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua" },
+    { name = "AXURS", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/XE3Scripts/Axur-sGamesHub/refs/heads/main/StealAnEgg" },
+    { name = "POTATO HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/potatohub67/potatoscripts/refs/heads/main/stealaegg.lua" },
+    { name = "JANE HUB", status = "No Key", recommended = false, url = "https://flowauth.net/v1/loaders/3c4e87ed34813171b0f8d53a108a7d88.lua" },
+    { name = "WIS HUB", status = "No Key", recommended = false, url = "https://api.wishub.cloud/files/loader.lua" },
+    { name = "SOFTKILLZ", status = "No Key", recommended = false, url = "https://pastebin.com/raw/ZuEBwb5K" }
 }
 
 -- Otomatis masukkan NewScriptsData ke dalam ScriptDataStealAnEgg agar masuk ke tab Steal An Egg & Info
@@ -176,7 +183,8 @@ local Categories = {
         key = "NewScript",
         name = "new script",
         type = "new_script",
-        scripts = NewScriptsData, 
+        scripts = NewScriptsData,
+        hasNotification = true, -- Tanda bahwa kategori ini memiliki pembaruan/notifikasi
     },
 }
 
@@ -690,7 +698,7 @@ local function RenderContent(categoryIndex)
     if activeFilter == "Key" then filterTag = " KEY"
     elseif activeFilter == "No Key" then filterTag = " NO KEY"
     elseif activeFilter == "Recommended" then filterTag = " RECOMMENDED" end
-    ContentLabel.Text = string.upper(category.name) .. " -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
+    ContentLabel.Text = string.upper(category.name) --[[fix label]] .. " -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
 
     if #filteredScripts == 0 then
         local empty = Instance.new("TextLabel")
@@ -836,6 +844,17 @@ local function SetActiveCategory(index)
             BackgroundColor3 = isActive and Theme.AccentBlue or Theme.CardBg
         }):Play()
         btnData.label.TextColor3 = isActive and Theme.TextPrimary or Theme.TextSecondary
+
+        -- Jika kategori diklik dan memiliki notifikasi, hilangkan tanda seru/notifikasinya
+        if isActive and Categories[i].hasNotification then
+            Categories[i].hasNotification = false
+            if btnData.notifBadge then
+                TweenService:Create(btnData.notifBadge, TweenInfo.new(0.15), { TextTransparency = 1 }):Play()
+                task.delay(0.15, function()
+                    if btnData.notifBadge then btnData.notifBadge:Destroy() end
+                end)
+            end
+        end
     end
 
     RenderContent(index)
@@ -872,7 +891,28 @@ for i, category in ipairs(Categories) do
     label.Text = category.name
     label.Parent = tabBtn
 
-    table.insert(sidebarTabButtons, { frame = tabBtn, label = label })
+    local notifBadge = nil
+    if category.hasNotification then
+        notifBadge = Instance.new("TextLabel")
+        notifBadge.Name = "NotifBadge"
+        notifBadge.Size = UDim2.fromOffset(18, 18)
+        notifBadge.AnchorPoint = Vector2.new(1, 0.5)
+        notifBadge.Position = UDim2.new(1, -8, 0.5, 0)
+        notifBadge.BackgroundColor3 = Theme.KeyTagBg
+        notifBadge.Text = "!"
+        notifBadge.Font = Enum.Font.GothamBold
+        notifBadge.TextSize = 11
+        notifBadge.TextColor3 = Theme.TextPrimary
+        notifBadge.Parent = tabBtn
+        Instance.new("UICorner", notifBadge).CornerRadius = UDim.new(1, 0)
+
+        local notifStroke = Instance.new("UIStroke")
+        notifStroke.Color = Theme.TextPrimary
+        notifStroke.Thickness = 1
+        notifStroke.Parent = notifBadge
+    end
+
+    table.insert(sidebarTabButtons, { frame = tabBtn, label = label, notifBadge = notifBadge })
 
     tabBtn.MouseButton1Click:Connect(function()
         SetActiveCategory(i)
