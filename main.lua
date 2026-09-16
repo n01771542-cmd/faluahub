@@ -123,30 +123,29 @@ local ScriptDataStealAnEgg = {
     { name = "BERRI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/moshixzn/ahhagdienavd/refs/heads/main/loader.lua.txt" },
     { name = "NOCTRUNHUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/insanecontenty2k-blip/scriptss/main/universalscriptsofop" },
     { name = "CITRA HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/gilgameshfate59/ohbfoosk8tid/main/CitraLoader.lua" },
-    { name = "VINCI HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/tutorkah104-rgb/Steal-an-Egg/refs/heads/main/Vincitore.luau" },
+    { name = "VINCI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/tutorkah104-rgb/Steal-an-Egg/refs/heads/main/Vincitore.luau" },
     { name = "HORIZON HUB ANTI HIT", status = "No Key", recommended = false, url = 'script_key = "Trial"; loadstring(game:HttpGet("https://api.getpolsec.com/scripts/hosted/6582551b42d21c6b7eb55f1d76d8d50ce53cb35592093d6615b5e83437594dc0.lua"))()' },
     { name = "CHILLI HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua" },
-    { name = "TSUO HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg" },
-    { name = "LKZ HUB", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/LucasggkX/LKZ-Hub/refs/heads/main/Loader.lua" },
+    { name = "TSUO HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/stealanegg" },
+    { name = "LKZ HUB", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/LucasggkX/LKZ-Hub/refs/heads/main/Loader.lua" },
     { name = "REZZY HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Roman666Cabj/Nether/refs/heads/main/RezzyStealAnEgg.lua" },
     { name = "RAVANGE HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Revenge-Hub-Roblox/Scripts/refs/heads/main/Loader.lua" },
-    -- 7 Script lama yang tetap dipertahankan di tab "Steal an Egg"
     { name = "ZNEX HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/181cfe2bd5df35ce78607b5ffb37c6666abd76eda11ff33b0f24a1b2d8ee935f/download" },
     { name = "ASVARA HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/asvraRoblox/stealegg/refs/heads/main/main" },
     { name = "VSN", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/NetNullv1/VSN/refs/heads/main/HUB" },
     { name = "SHADOW HUB", status = "Key", recommended = false, url = "https://pastebin.com/raw/QAvDbBKa" },
     { name = "VELOX HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/f0b3ce85f588800ae7e46415fc4dd79ff2b0d09c9b6a8e19cea8a67b47f1bcbd/download" },
     { name = "KING VYPER (KEY: KV-FREE-TRIAL-WOKS)", status = "Key", recommended = false, url = "https://kingvypers.site/raw/TrialLoader" },
-    { name = "HIP-HUP", status = "Key", recommended = false, url = "https://hiphub.cloud/api/script-roblox/loader" }
+    { name = "HIP-HUP", status = "Key", recommended = true, url = "https://hiphub.cloud/api/script-roblox/loader" }
 }
 
 -- [ DATA NEW SCRIPTS (6 NEW SCRIPTS) ]
 local NewScriptsData = {
-    { name = "BK HUB", status = "No Key", recommended = false, url = "https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua" },
+    { name = "BK HUB", status = "No Key", recommended = true, url = "https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua" },
     { name = "AXURS", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/XE3Scripts/Axur-sGamesHub/refs/heads/main/StealAnEgg" },
     { name = "POTATO HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/potatohub67/potatoscripts/refs/heads/main/stealaegg.lua" },
     { name = "JANE HUB", status = "No Key", recommended = false, url = "https://flowauth.net/v1/loaders/3c4e87ed34813171b0f8d53a108a7d88.lua" },
-    { name = "WIS HUB", status = "No Key", recommended = false, url = "https://api.wishub.cloud/files/loader.lua" },
+    { name = "WIS HUB", status = "No Key", recommended = true, url = "https://api.wishub.cloud/files/loader.lua" },
     { name = "SOFTKILLZ", status = "No Key", recommended = false, url = "https://pastebin.com/raw/ZuEBwb5K" }
 }
 
@@ -698,7 +697,7 @@ local function RenderContent(categoryIndex)
     if activeFilter == "Key" then filterTag = " KEY"
     elseif activeFilter == "No Key" then filterTag = " NO KEY"
     elseif activeFilter == "Recommended" then filterTag = " RECOMMENDED" end
-    ContentLabel.Text = string.upper(category.name) --[[fix label]] .. " -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
+    ContentLabel.Text = string.upper(category.name) .. " -- " .. #filteredScripts .. filterTag .. " SCRIPTS"
 
     if #filteredScripts == 0 then
         local empty = Instance.new("TextLabel")
@@ -845,7 +844,6 @@ local function SetActiveCategory(index)
         }):Play()
         btnData.label.TextColor3 = isActive and Theme.TextPrimary or Theme.TextSecondary
 
-        -- Jika kategori diklik dan memiliki notifikasi, hilangkan tanda seru/notifikasinya
         if isActive and Categories[i].hasNotification then
             Categories[i].hasNotification = false
             if btnData.notifBadge then
