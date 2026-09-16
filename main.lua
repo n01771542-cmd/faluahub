@@ -102,7 +102,7 @@ local ScriptDataStealAnEgg = {
     { name = "JINHUB", status = "Key", recommended = false, url = "https://jinhub.my.id/scripts/Universal.lua" },
     { name = "OVERFLOW", status = "Key", recommended = false, url = "https://overflow.cx/loader.lua" },
     { name = "BLYXO HUB", status = "No Key", recommended = true, url = "https://flowauth.net/v1/loaders/69d3463240384f3a73fbe32c178093a2.lua" },
-    { name = "SENA HUB V2", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/loaderv2sena" },
+    { name = "SENA V3", status = "No Key", recommended = true, url = "https://raw.githubusercontent.com/senarblx/sena/refs/heads/main/senav3go" },
     { name = "TOOLBOX", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/Abdullahking20/loader-lua/main/loader" },
     { name = "SOLVEXGUI HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/Solvexxxx/Scripts/refs/heads/main/SolvexGUI_SAE.lua" },
     { name = "SPEED BYPASS", status = "No Key", recommended = false, url = "https://pastefy.app/iedWaiQX/raw" },
