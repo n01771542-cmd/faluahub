@@ -20,6 +20,7 @@ DestroyOldUI("leon4951HubGuiV2")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
 
 -- [ 2. CONFIGURASI & THEME ]
 local Theme = {
@@ -136,11 +137,7 @@ local ScriptDataStealAnEgg = {
     { name = "SHADOW HUB", status = "Key", recommended = false, url = "https://pastebin.com/raw/QAvDbBKa" },
     { name = "VELOX HUB", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/f0b3ce85f588800ae7e46415fc4dd79ff2b0d09c9b6a8e19cea8a67b47f1bcbd/download" },
     { name = "KING VYPER (KEY: KV-FREE-TRIAL-WOKS)", status = "Key", recommended = false, url = "https://kingvypers.site/raw/TrialLoader" },
-    { name = "HIP-HUP", status = "Key", recommended = true, url = "https://hiphub.cloud/api/script-roblox/loader" }
-}
-
--- [ DATA NEW SCRIPTS (6 NEW SCRIPTS) ]
-local NewScriptsData = {
+    { name = "HIP-HUP", status = "Key", recommended = true, url = "https://hiphub.cloud/api/script-roblox/loader" },
     { name = "BK HUB", status = "No Key", recommended = true, url = "https://api.luarmor.net/files/v4/loaders/9ee4edde227ac85f50872bf9e4226508.lua" },
     { name = "AXURS", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/XE3Scripts/Axur-sGamesHub/refs/heads/main/StealAnEgg" },
     { name = "POTATO HUB", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/potatohub67/potatoscripts/refs/heads/main/stealaegg.lua" },
@@ -149,21 +146,68 @@ local NewScriptsData = {
     { name = "SOFTKILLZ", status = "No Key", recommended = false, url = "https://pastebin.com/raw/ZuEBwb5K" }
 }
 
+-- [ DATA NEW SCRIPTS (6 NEW SCRIPTS) ]
+local NewScriptsData = {
+    { name = "FYNESSED", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/AhmadV6/StealAnEgg/refs/heads/main/FynessedHub" },
+    { name = "SELUX", status = "Key", recommended = false, url = "https://raw.githubusercontent.com/seltonmt012/sel01-rbx/main/loader.lua" },
+    { name = "SOLARIS", status = "Key", recommended = false, url = "https://api.obscuravm.com/scripts/1231452106622100334" },
+    { name = "SEISEN", status = "Key", recommended = false, url = "https://api.jnkie.com/api/v1/luascripts/public/8ac2e97282ac0718aeeb3bb3856a2821d71dc9e57553690ab508ebdb0d1569da/download" },
+    { name = "RBXZ", status = "Key", recommended = false, url = "https://rbxscriptz.fun/RBXZ-HUB" },
+    { name = "SYSCALL", status = "No Key", recommended = false, url = "https://raw.githubusercontent.com/enzukaix/Syscall/refs/heads/main/Loader.lua" }
+}
+
 -- Otomatis masukkan NewScriptsData ke dalam ScriptDataStealAnEgg agar masuk ke tab Steal An Egg & Info
 for _, newScript in ipairs(NewScriptsData) do
     table.insert(ScriptDataStealAnEgg, newScript)
 end
 
--- Deduplikasi jika name + status + url persis sama
+-- Deduplikasi jika FULL URL persis sama
 local CleanedScripts = {}
 local DuplicateTracker = {}
 for _, s in ipairs(ScriptDataStealAnEgg) do
-    local identifier = s.name .. "|" .. s.status .. "|" .. s.url
+    local identifier = s.url
     if not DuplicateTracker[identifier] then
         DuplicateTracker[identifier] = true
         table.insert(CleanedScripts, s)
     end
 end
+
+-- [ SYSTEM CONFIG FAVORITE ]
+local FavoriteConfigName = "leon4951hub_favorites.json"
+local FavoriteList = {}
+
+local function LoadFavorites()
+    if readfile and pcall(readfile, FavoriteConfigName) then
+        local success, decoded = pcall(function()
+            return HttpService:JSONDecode(readfile(FavoriteConfigName))
+        end)
+        if success and type(decoded) == "table" then
+            FavoriteList = decoded
+        end
+    end
+end
+
+local function SaveFavorites()
+    if writefile then
+        pcall(function()
+            writefile(FavoriteConfigName, HttpService:JSONEncode(FavoriteList))
+        end)
+    end
+end
+
+LoadFavorites()
+
+local FavoriteScriptsData = {}
+local function RefreshFavoritesData()
+    FavoriteScriptsData = {}
+    for _, s in ipairs(CleanedScripts) do
+        local id = s.name .. "|" .. s.url
+        if FavoriteList[id] then
+            table.insert(FavoriteScriptsData, s)
+        end
+    end
+end
+RefreshFavoritesData()
 
 local Categories = {
     {
@@ -171,6 +215,12 @@ local Categories = {
         name = "steal an egg",
         type = "script_list",
         scripts = CleanedScripts,
+    },
+    {
+        key = "Favorite",
+        name = "favorite",
+        type = "script_list",
+        scripts = FavoriteScriptsData,
     },
     {
         key = "InfoAllScript",
@@ -391,10 +441,14 @@ Body.Position = UDim2.new(0, 12, 0, 48)
 Body.BackgroundTransparency = 1
 Body.Parent = MainFrame
 
-local Sidebar = Instance.new("Frame")
+local Sidebar = Instance.new("ScrollingFrame")
 Sidebar.Name = "Sidebar"
 Sidebar.Size = UDim2.new(0, 128, 1, 0)
 Sidebar.BackgroundTransparency = 1
+Sidebar.BorderSizePixel = 0
+Sidebar.ScrollBarThickness = 2
+Sidebar.AutomaticCanvasSize = Enum.AutomaticSize.Y
+Sidebar.CanvasSize = UDim2.new(0, 0, 0, 0)
 Sidebar.Parent = Body
 
 local SidebarLayout = Instance.new("UIListLayout")
@@ -468,6 +522,9 @@ ScriptScroll.ScrollBarImageColor3 = Theme.AccentBlue
 ScriptScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 ScriptScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 ScriptScroll.Parent = Content
+
+-- [ Forward declaration agar fungsi render ulang sidebar bisa dipanggil ]
+local RenderSidebarTabs
 
 -- [ 8. RENDER KONTEN ]
 local function RenderContent(categoryIndex)
@@ -621,7 +678,7 @@ local function RenderContent(categoryIndex)
                 nameLabel.TextSize = 12
                 nameLabel.TextColor3 = Theme.TextPrimary
                 nameLabel.BackgroundTransparency = 1
-                nameLabel.Size = UDim2.new(1, -140, 1, 0)
+                nameLabel.Size = UDim2.new(1, -170, 1, 0)
                 nameLabel.Position = UDim2.new(0, 10, 0, 0)
                 nameLabel.TextXAlignment = Enum.TextXAlignment.Left
                 nameLabel.TextTruncate = Enum.TextTruncate.AtEnd
@@ -656,6 +713,34 @@ local function RenderContent(categoryIndex)
                 statusBadge.TextColor3 = Theme.TextPrimary
                 statusBadge.Parent = row
                 Instance.new("UICorner", statusBadge).CornerRadius = UDim.new(0, 4)
+
+                -- Tombol Favorite di New Script
+                local favBtn = Instance.new("TextButton")
+                favBtn.Size = UDim2.fromOffset(24, 24)
+                favBtn.Position = UDim2.new(1, -152, 0.5, -12)
+                favBtn.BackgroundColor3 = Theme.RunPillBg
+                local fKeyId = scriptEntry.name .. "|" .. scriptEntry.url
+                favBtn.Text = FavoriteList[fKeyId] and "★" or "☆"
+                favBtn.Font = Enum.Font.GothamBold
+                favBtn.TextSize = 14
+                favBtn.TextColor3 = FavoriteList[fKeyId] and Theme.GoldBadge or Theme.TextSecondary
+                favBtn.AutoButtonColor = false
+                favBtn.Parent = row
+                Instance.new("UICorner", favBtn).CornerRadius = UDim.new(0, 4)
+
+                favBtn.MouseButton1Click:Connect(function()
+                    if FavoriteList[fKeyId] then
+                        FavoriteList[fKeyId] = nil
+                        favBtn.Text = "☆"
+                        favBtn.TextColor3 = Theme.TextSecondary
+                    else
+                        FavoriteList[fKeyId] = true
+                        favBtn.Text = "★"
+                        favBtn.TextColor3 = Theme.GoldBadge
+                    end
+                    SaveFavorites()
+                    RefreshFavoritesData()
+                end)
             end
         end
 
@@ -725,7 +810,9 @@ local function RenderContent(categoryIndex)
         nameLabel.TextSize = 12
         nameLabel.TextColor3 = Theme.TextPrimary
         nameLabel.BackgroundTransparency = 1
-        nameLabel.Size = UDim2.new(1, -230, 1, 0)
+        -- Menyesuaikan lebar teks agar tidak menabrak badge favorite
+        local rightOffsetWidth = scriptEntry.recommended and 250 or 160
+        nameLabel.Size = UDim2.new(1, -rightOffsetWidth, 1, 0)
         nameLabel.Position = UDim2.new(0, 10, 0, 0)
         nameLabel.TextXAlignment = Enum.TextXAlignment.Left
         nameLabel.TextTruncate = Enum.TextTruncate.AtEnd
@@ -774,6 +861,7 @@ local function RenderContent(categoryIndex)
         statusBadge.Parent = row
         Instance.new("UICorner", statusBadge).CornerRadius = UDim.new(0, 4)
 
+        local favXPos = -152
         if scriptEntry.recommended then
             local recBadge = Instance.new("TextLabel")
             recBadge.Size = UDim2.fromOffset(92, 18)
@@ -785,7 +873,36 @@ local function RenderContent(categoryIndex)
             recBadge.TextColor3 = Color3.fromRGB(0, 0, 0)
             recBadge.Parent = row
             Instance.new("UICorner", recBadge).CornerRadius = UDim.new(0, 4)
+            favXPos = -250
         end
+
+        -- Tombol Bintang Favorite di setiap script baris
+        local favBtn = Instance.new("TextButton")
+        favBtn.Size = UDim2.fromOffset(24, 24)
+        favBtn.Position = UDim2.new(1, favXPos, 0.5, -12)
+        favBtn.BackgroundColor3 = Theme.RunPillBg
+        local fKeyId = scriptEntry.name .. "|" .. scriptEntry.url
+        favBtn.Text = FavoriteList[fKeyId] and "★" or "☆"
+        favBtn.Font = Enum.Font.GothamBold
+        favBtn.TextSize = 14
+        favBtn.TextColor3 = FavoriteList[fKeyId] and Theme.GoldBadge or Theme.TextSecondary
+        favBtn.AutoButtonColor = false
+        favBtn.Parent = row
+        Instance.new("UICorner", favBtn).CornerRadius = UDim.new(0, 4)
+
+        favBtn.MouseButton1Click:Connect(function()
+            if FavoriteList[fKeyId] then
+                FavoriteList[fKeyId] = nil
+                favBtn.Text = "☆"
+                favBtn.TextColor3 = Theme.TextSecondary
+            else
+                FavoriteList[fKeyId] = true
+                favBtn.Text = "★"
+                favBtn.TextColor3 = Theme.GoldBadge
+            end
+            SaveFavorites()
+            RefreshFavoritesData()
+        end)
     end
     
     ScriptScroll.CanvasPosition = Vector2.new(0, 0)
@@ -837,6 +954,10 @@ local sidebarTabButtons = {}
 local function SetActiveCategory(index)
     activeCategoryIndex = index
 
+    -- Update data favorite saat tab favorite diklik
+    RefreshFavoritesData()
+    Categories[2].scripts = FavoriteScriptsData
+
     for i, btnData in ipairs(sidebarTabButtons) do
         local isActive = (i == index)
         TweenService:Create(btnData.frame, TweenInfo.new(0.15), {
@@ -858,65 +979,75 @@ local function SetActiveCategory(index)
     RenderContent(index)
 end
 
-for i, category in ipairs(Categories) do
-    local tabBtn = Instance.new("TextButton")
-    tabBtn.Name = "Tab_" .. category.key
-    tabBtn.Size = UDim2.new(1, 0, 0, 42)
-    tabBtn.BackgroundColor3 = (i == activeCategoryIndex) and Theme.AccentBlue or Theme.CardBg
-    tabBtn.Text = ""
-    tabBtn.AutoButtonColor = false
-    tabBtn.LayoutOrder = i
-    tabBtn.Parent = Sidebar
-    Instance.new("UICorner", tabBtn).CornerRadius = UDim.new(0, 8)
-
-    local dot = Instance.new("Frame")
-    dot.Size = UDim2.fromOffset(7, 7)
-    dot.Position = UDim2.new(0, 12, 0.5, -3.5)
-    dot.BackgroundColor3 = Theme.TextPrimary
-    dot.BorderSizePixel = 0
-    dot.Parent = tabBtn
-    Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
-
-    local label = Instance.new("TextLabel")
-    label.Font = Enum.Font.GothamBold
-    label.TextSize = 12
-    label.TextColor3 = (i == activeCategoryIndex) and Theme.TextPrimary or Theme.TextSecondary
-    label.BackgroundTransparency = 1
-    label.Size = UDim2.new(1, -30, 1, 0)
-    label.Position = UDim2.new(0, 26, 0, 0)
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.TextWrapped = true
-    label.Text = category.name
-    label.Parent = tabBtn
-
-    local notifBadge = nil
-    if category.hasNotification then
-        notifBadge = Instance.new("TextLabel")
-        notifBadge.Name = "NotifBadge"
-        notifBadge.Size = UDim2.fromOffset(18, 18)
-        notifBadge.AnchorPoint = Vector2.new(1, 0.5)
-        notifBadge.Position = UDim2.new(1, -8, 0.5, 0)
-        notifBadge.BackgroundColor3 = Theme.KeyTagBg
-        notifBadge.Text = "!"
-        notifBadge.Font = Enum.Font.GothamBold
-        notifBadge.TextSize = 11
-        notifBadge.TextColor3 = Theme.TextPrimary
-        notifBadge.Parent = tabBtn
-        Instance.new("UICorner", notifBadge).CornerRadius = UDim.new(1, 0)
-
-        local notifStroke = Instance.new("UIStroke")
-        notifStroke.Color = Theme.TextPrimary
-        notifStroke.Thickness = 1
-        notifStroke.Parent = notifBadge
+RenderSidebarTabs = function()
+    for _, child in ipairs(Sidebar:GetChildren()) do
+        if not child:IsA("UIListLayout") then
+            child:Destroy()
+        end
     end
+    sidebarTabButtons = {}
 
-    table.insert(sidebarTabButtons, { frame = tabBtn, label = label, notifBadge = notifBadge })
+    for i, category in ipairs(Categories) do
+        local tabBtn = Instance.new("TextButton")
+        tabBtn.Name = "Tab_" .. category.key
+        tabBtn.Size = UDim2.new(1, 0, 0, 42)
+        tabBtn.BackgroundColor3 = (i == activeCategoryIndex) and Theme.AccentBlue or Theme.CardBg
+        tabBtn.Text = ""
+        tabBtn.AutoButtonColor = false
+        tabBtn.LayoutOrder = i
+        tabBtn.Parent = Sidebar
+        Instance.new("UICorner", tabBtn).CornerRadius = UDim.new(0, 8)
 
-    tabBtn.MouseButton1Click:Connect(function()
-        SetActiveCategory(i)
-    end)
+        local dot = Instance.new("Frame")
+        dot.Size = UDim2.fromOffset(7, 7)
+        dot.Position = UDim2.new(0, 12, 0.5, -3.5)
+        dot.BackgroundColor3 = Theme.TextPrimary
+        dot.BorderSizePixel = 0
+        dot.Parent = tabBtn
+        Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
+
+        local label = Instance.new("TextLabel")
+        label.Font = Enum.Font.GothamBold
+        label.TextSize = 12
+        label.TextColor3 = (i == activeCategoryIndex) and Theme.TextPrimary or Theme.TextSecondary
+        label.BackgroundTransparency = 1
+        label.Size = UDim2.new(1, -30, 1, 0)
+        label.Position = UDim2.new(0, 26, 0, 0)
+        label.TextXAlignment = Enum.TextXAlignment.Left
+        label.TextWrapped = true
+        label.Text = category.name
+        label.Parent = tabBtn
+
+        local notifBadge = nil
+        if category.hasNotification then
+            notifBadge = Instance.new("TextLabel")
+            notifBadge.Name = "NotifBadge"
+            notifBadge.Size = UDim2.fromOffset(18, 18)
+            notifBadge.AnchorPoint = Vector2.new(1, 0.5)
+            notifBadge.Position = UDim2.new(1, -8, 0.5, 0)
+            notifBadge.BackgroundColor3 = Theme.KeyTagBg
+            notifBadge.Text = "!"
+            notifBadge.Font = Enum.Font.GothamBold
+            notifBadge.TextSize = 11
+            notifBadge.TextColor3 = Theme.TextPrimary
+            notifBadge.Parent = tabBtn
+            Instance.new("UICorner", notifBadge).CornerRadius = UDim.new(1, 0)
+
+            local notifStroke = Instance.new("UIStroke")
+            notifStroke.Color = Theme.TextPrimary
+            notifStroke.Thickness = 1
+            notifStroke.Parent = notifBadge
+        end
+
+        table.insert(sidebarTabButtons, { frame = tabBtn, label = label, notifBadge = notifBadge })
+
+        tabBtn.MouseButton1Click:Connect(function()
+            SetActiveCategory(i)
+        end)
+    end
 end
 
+RenderSidebarTabs()
 RenderContent(activeCategoryIndex)
 
 -- [ 11. DRAG SYSTEM (HEADER) ]
