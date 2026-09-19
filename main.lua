@@ -1,4 +1,7 @@
--- // Inisialisasi Player & CoreGui
+-- // ==========================================
+-- // LEON4951 - UPDATE & LOADER SCRIPT
+-- // ==========================================
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -8,7 +11,7 @@ if playerGui:FindFirstChild("Leon4951UpdateGui") then
     playerGui.Leon4951UpdateGui:Destroy()
 end
 
--- // Membuat ScreenGui
+-- // Membuat ScreenGui Utama
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "Leon4951UpdateGui"
 screenGui.ResetOnSpawn = false
@@ -38,7 +41,7 @@ local waButton = Instance.new("TextButton")
 waButton.Name = "WAButton"
 waButton.Size = UDim2.new(0, 280, 0, 50)
 waButton.Position = UDim2.new(0.5, -140, 0, 30)
-waButton.BackgroundColor3 = Color3.fromRGB(37, 211, 102) -- Warna khas WhatsApp
+waButton.BackgroundColor3 = Color3.fromRGB(37, 211, 102) -- Warna Hijau WhatsApp
 waButton.BorderSizePixel = 0
 waButton.Font = Enum.Font.GothamBold
 waButton.Text = "LINK SALURAN WA"
@@ -65,11 +68,10 @@ infoLabel.TextXAlignment = Enum.TextXAlignment.Center
 infoLabel.TextYAlignment = Enum.TextYAlignment.Top
 infoLabel.Parent = mainFrame
 
--- // Fungsi Salin Link otomatis saat tombol dipencet
+-- // Fungsi Otomatis Salin Link Saluran WA Saat Tombol Dipencet
 waButton.MouseButton1Click:Connect(function()
     local waLink = "https://whatsapp.com/channel/0029VbDq74VHgZWbi0AdSa1L"
     
-    -- Mencoba menyalin ke clipboard menggunakan fungsi executor
     if setclipboard then
         setclipboard(waLink)
         waButton.Text = "LINK BERHASIL DISALIN!"
