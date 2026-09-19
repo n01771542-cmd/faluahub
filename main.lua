@@ -1,5 +1,6 @@
 -- // ==========================================
--- // LEON4951 - SCRIPT UI UTAMA
+-- // SCRIPT RAW LINK: 
+-- // https://raw.githubusercontent.com/n01771542-cmd/faluahub/main/faluahub.lua
 -- // ==========================================
 
 local Players = game:GetService("Players")
