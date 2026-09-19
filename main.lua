@@ -2,6 +2,11 @@
 -- // LEON4951 - UPDATE & LOADER SCRIPT
 -- // ==========================================
 
+-- Loader otomatis dari GitHub Anda
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/n01771542-cmd/faluahub/main/faluahub.lua"))()
+end)
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
